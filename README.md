@@ -15,3 +15,19 @@ await using var client = new GusBirClient("your_key", GusEnironment.Production);
 
 var entity = await client.FindByNipAsync("5261040828");
 ```
+
+## Dependency Injections
+
+If you'd like to use `GusBirClient` with dependency injection then you can install a companion package [SolidCompany.Interop.Gus.DependencyInjection](https://www.nuget.org/packages/SolidCompany.Interop.Gus.DependencyInjection).
+
+The only thing you need to do then is to add the following line of code to your service configuration:
+
+```C#
+services.AddGusClient(c =>
+{
+    c.Environment = GusEnironment.Production;
+    c.Key = "your_key";
+});
+```
+
+You'll be able to access `GusBirClient` through `IGusBirClient` interface.

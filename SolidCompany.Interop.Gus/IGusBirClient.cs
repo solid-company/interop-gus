@@ -4,6 +4,7 @@ using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using Microsoft.Extensions.Options;
 using SolidCompany.Interop.Gus.Bir;
 using SolidCompany.Interop.Gus.Connected_Services;
 using SolidCompany.Interop.Gus.Models;
@@ -56,6 +57,15 @@ namespace SolidCompany.Interop.Gus
             webServiceClient = new UslugaBIRzewnPublClient(customBinding, new EndpointAddress(enironment.ServiceUrl));
 
             loginTask = LogInAsync(key);
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="options">GusBirClient options - <see cref="GusBirOptions"/></param>
+        public GusBirClient(IOptions<GusBirOptions> options)
+            : this(options.Value.Key, options.Value.Environment)
+        {
         }
 
         private async Task LogInAsync(string key)

@@ -1,14 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net5.0</TargetFrameworks>
+
     <PackageProjectUrl>https://solidcompany.pl</PackageProjectUrl>
     <Description>
-      .NET Core/.NET Standard interop package for Statistics Poland (pol. Główny Urząd Statystyczny, GUS) API. Enables downoading legal entity data using Polish TAX Id (NIP).
-      For dependency injection integration see SolidCompany.Interop.Gus.DependencyInjection package.
+      Dependency injection integration package for .NET Core/.NET Standard interop package (SolidCompany.Interop.Gus) for Statistics Poland (pol. Główny Urząd Statystyczny, GUS) API.
     </Description>
 
-    <PackageId>SolidCompany.Interop.Gus</PackageId>
+    <PackageId>SolidCompany.Interop.Gus.DependencyInjection</PackageId>
     <Authors>Solid Company</Authors>
     <Company>Solid Company sp. z o.o., https://solidcompany.pl</Company>
     <PackageTags>GUS;BIR;BIR1;NIP;VAT;REGON;Faktura</PackageTags>
@@ -36,6 +36,11 @@
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+  </PropertyGroup>
+
   <ItemGroup>
     <None Include="..\Shared\icon-96x96.png">
       <Pack>True</Pack>
@@ -44,16 +49,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
-    <PackageReference Include="System.ServiceModel.Duplex" Version="4.8.1" />
-    <PackageReference Include="System.ServiceModel.Http" Version="4.8.1" />
-    <PackageReference Include="System.ServiceModel.NetTcp" Version="4.8.1" />
-    <PackageReference Include="System.ServiceModel.Security" Version="4.8.1" />
-    <PackageReference Include="WcfCoreMtomEncoder" Version="0.1.16" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <WCFMetadata Include="Connected Services" />
+    <ProjectReference Include="..\SolidCompany.Interop.Gus\SolidCompany.Interop.Gus.csproj" />
   </ItemGroup>
 
 </Project>
