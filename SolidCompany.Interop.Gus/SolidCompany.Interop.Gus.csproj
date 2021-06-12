@@ -9,16 +9,25 @@
     <PackageId>SolidCompany.Interop.Gus</PackageId>
     <Authors>Solid Company</Authors>
     <Company>Solid Company sp. z o.o., https://solidcompany.pl</Company>
-    <PackageTags>gus;nip;regon;faktura</PackageTags>
+    <PackageTags>GUS;BIR;BIR1;NIP;REGON;Faktura</PackageTags>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageIcon>icon-96x96.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
 
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <RepositoryUrl>https://github.com/solid-company/interop</RepositoryUrl>
+    <RepositoryUrl>https://github.com/solid-company/interop-gus</RepositoryUrl>
+  </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 

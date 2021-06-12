@@ -1,4 +1,4 @@
-`SolidCompany.Interop.Gus` is a .NET Core/.NET StandardNET Core/.NET Standard interop package for Statistics Poland (pol. G³ówny Urz¹d Statystyczny, GUS) API. Enables downoading legal entity data
+ï»¿`SolidCompany.Interop.Gus` is a .NET Core/.NET StandardNET Core/.NET Standard interop package for Statistics Poland (pol. GÅ‚Ã³wny UrzÄ…d Statystyczny, GUS) API. Enables downoading legal entity data
     using Polish TAX Id (NIP).
 
 ## Get Packages
