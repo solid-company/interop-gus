@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+Ôªøusing System.Threading.Tasks;
 using NUnit.Framework;
 using SolidCompany.Interop.Gus.Connected_Services;
 
@@ -35,10 +35,10 @@ namespace SolidCompany.Interop.Gus.Tests
 
             Assert.That(entity.Regon, Is.EqualTo("000331501"));
             Assert.That(entity.Nip, Is.EqualTo("5261040828"));
-            Assert.That(entity.Name, Is.EqualTo("G£”WNY URZ•D STATYSTYCZNY"));
+            Assert.That(entity.Name, Is.EqualTo("G≈Å√ìWNY URZƒÑD STATYSTYCZNY"));
             Assert.That(entity.Voivodeship, Is.EqualTo("MAZOWIECKIE"));
             Assert.That(entity.District, Is.EqualTo("m. st. Warszawa"));
-            Assert.That(entity.Commune, Is.EqualTo("årÛdmieúcie"));
+            Assert.That(entity.Commune, Is.EqualTo("≈ör√≥dmie≈õcie"));
             Assert.That(entity.City, Is.EqualTo("Warszawa"));
             Assert.That(entity.PostalCode, Is.EqualTo("00-925"));
             Assert.That(entity.Post, Is.EqualTo("Warszawa"));
