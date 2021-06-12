@@ -3,8 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net5.0</TargetFrameworks>
     <PackageProjectUrl>https://solidcompany.pl</PackageProjectUrl>
-    <Description>.NET Core/.NET Standard interop package for Statistics Poland (pol. Główny Urząd Statystyczny, GUS) API. Enables downoading legal entity data
-    using Polish TAX Id (NIP).</Description>
+    <Description>.NET Core/.NET Standard interop package for Statistics Poland (pol. Główny Urząd Statystyczny, GUS) API. Enables downoading legal entity data using Polish TAX Id (NIP).</Description>
 
     <PackageId>SolidCompany.Interop.Gus</PackageId>
     <Authors>Solid Company</Authors>
