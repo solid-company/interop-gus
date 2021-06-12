@@ -1,0 +1,41 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+name: Build and Publish SolidCompany.Interop.Gus
+
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet build'
+  inputs:
+    command: 'build'
+    arguments: '--configuration $(buildConfiguration) -p:Version=$(majorVersion).$(minorVersion).$(patchVersion)'
+    projects: '**/*csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: "dotnet pack"
+  inputs:
+    command: 'custom'
+    custom: 'pack'
+    arguments: '--configuration $(buildConfiguration) -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:PackageVersion=$(majorVersion).$(minorVersion).$(patchVersion) -p:ContinuousIntegrationBuild=true -p:GitRepositoryRemoteName=origin'
+    packagesToPack: '**/*.csproj;!**/*.Tests.csproj'
+    nobuild: true
+
+- task: DotNetCoreCLI@2
+  displayName: "dotnet nuget push"
+  inputs:
+    command: custom
+    custom: nuget
+    arguments: >
+      push **/*.nupkg
+      -s $(NuGetSourceServerUrl)
+      -k $(NuGetSourceServerApiKey)
