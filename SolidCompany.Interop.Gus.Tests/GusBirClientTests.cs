@@ -14,11 +14,19 @@ namespace SolidCompany.Interop.Gus.Tests
             client = new GusBirClient("abcde12345abcde12345", GusEnironment.Test);
         }
 
+#if NET5_0
         [OneTimeTearDown]
         public async Task OneTimeTearDown()
         {
             await client.DisposeAsync();
         }
+#else
+        [OneTimeTearDown]
+        public void OneTimeTearDown()
+        {
+            client.Dispose();
+        }
+#endif
 
         [Test]
         public async Task Can_find_legal_entity_by_NIP()

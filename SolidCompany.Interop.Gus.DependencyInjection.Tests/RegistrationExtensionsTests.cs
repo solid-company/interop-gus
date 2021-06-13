@@ -6,7 +6,7 @@ using SolidCompany.Interop.Gus.Connected_Services;
 
 namespace SolidCompany.Interop.Gus.DependencyInjection.Tests
 {
-    public class Tests
+    public class RegistrationExtensionsTests
     {
         private IHost host;
 
