@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using SolidCompany.Interop.Gus.Connected_Services;
 
@@ -31,15 +32,45 @@ namespace SolidCompany.Interop.Gus.Tests
         [Test]
         public async Task Can_find_legal_entity_by_NIP()
         {
-            var entity = await client.FindByNipAsync("5261040828");
+            var result = await client.FindByNipAsync("5261040828");
 
-            Assert.That(entity, Is.Not.Null);
+            Assert.That(result.Success, Is.True);
+            Assert.That(result.Entities, Is.Not.Null);
+        }
+
+        [Test]
+        public async Task Can_find_legal_entity_by_REGON()
+        {
+            var result = await client.FindByRegonAsync("000331501");
+
+            Assert.That(result.Success, Is.True);
+            Assert.That(result.Entities, Is.Not.Null);
+        }
+
+        [Test]
+        public async Task Can_find_legal_entity_by_KRS()
+        {
+            var result = await client.FindByKrsAsync("0000023302");
+
+            Assert.That(result.Success, Is.True);
+            Assert.That(result.Entities, Is.Not.Null);
+        }
+
+        [Test]
+        public async Task Cant_find_not_existing_entity()
+        {
+            var result = await client.FindByNipAsync("1231231212");
+
+            Assert.That(result.Success, Is.False);
+            Assert.That(result.Error, Is.Not.Null);
         }
 
         [Test]
         public async Task All_fields_are_equal_to_what_is_expected()
         {
-            var entity = await client.FindByNipAsync("5261040828");
+            var result = await client.FindByNipAsync("5261040828");
+
+            var entity = result.Entities.Single();
 
             Assert.That(entity.Regon, Is.EqualTo("000331501"));
             Assert.That(entity.Nip, Is.EqualTo("5261040828"));

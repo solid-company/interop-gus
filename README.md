@@ -13,7 +13,12 @@ When you receive your key then you are free to use the client:
 ```C#
 await using var client = new GusBirClient("your_key", GusEnironment.Production);
 
-var entity = await client.FindByNipAsync("5261040828");
+var result = await client.FindByNipAsync("5261040828");
+
+if (result.Success)
+{
+    var found = result.Entities;
+}
 ```
 
 ## Dependency Injections
