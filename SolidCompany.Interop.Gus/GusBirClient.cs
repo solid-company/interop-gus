@@ -17,7 +17,7 @@ namespace SolidCompany.Interop.Gus
 {
     /// <inheritdoc cref="IGusBirClient" />
     public sealed class GusBirClient : IGusBirClient, IDisposable
-#if NET5_0
+#if NET5_0_OR_GREATER
     , IAsyncDisposable
 #endif
     {
@@ -31,19 +31,21 @@ namespace SolidCompany.Interop.Gus
         /// Constructor.
         /// </summary>
         /// <param name="key">User key</param>
-        /// <param name="enironment">GUS environment</param>
+        /// <param name="environment">GUS environment</param>
+        /// <param name="proxyAddress">Proxy server address</param>
         /// <exception cref="ArgumentNullException">Thrown when key or environment is not specified.</exception>
-        public GusBirClient(string key, GusEnironment enironment)
+        public GusBirClient(string key, GusEnironment environment, Uri proxyAddress = null)
         {
             _ = key ?? throw new ArgumentNullException(nameof(key), "Key not specified.");
-            _ = enironment ?? throw new ArgumentNullException(nameof(enironment), "Environment not specified.");
+            _ = environment ?? throw new ArgumentNullException(nameof(environment), "Environment not specified.");
 
             var mtomMessageEncoderBindingElement = new MtomMessageEncoderBindingElement(new TextMessageEncodingBindingElement());
             var httpsBindingElement = new HttpsTransportBindingElement();
+            httpsBindingElement.ProxyAddress = proxyAddress;
 
             var customBinding = new CustomBinding(mtomMessageEncoderBindingElement, httpsBindingElement);
 
-            webServiceClient = new UslugaBIRzewnPublClient(customBinding, new EndpointAddress(enironment.ServiceUrl));
+            webServiceClient = new UslugaBIRzewnPublClient(customBinding, new EndpointAddress(environment.ServiceUrl));
 
             loginTask = LogInAsync(key);
         }
@@ -53,7 +55,7 @@ namespace SolidCompany.Interop.Gus
         /// </summary>
         /// <param name="options">GusBirClient options - <see cref="GusBirOptions"/></param>
         public GusBirClient(IOptions<GusBirOptions> options)
-            : this(options.Value.Key, options.Value.Environment)
+            : this(options.Value.Key, options.Value.Environment, options.Value.ProxyAddress)
         {
         }
 
@@ -72,12 +74,12 @@ namespace SolidCompany.Interop.Gus
         {
             await loginTask;
 
-            var pParametryWyszukiwania = new ParametryWyszukiwania
+            var parametryWyszukiwania = new ParametryWyszukiwania
             {
                 Nip = nip
             };
 
-            return await GetLegalEntityAsync(pParametryWyszukiwania);
+            return await GetLegalEntityAsync(parametryWyszukiwania);
         }
 
         /// <inheritdoc />
@@ -85,12 +87,12 @@ namespace SolidCompany.Interop.Gus
         {
             await loginTask;
 
-            var pParametryWyszukiwania = new ParametryWyszukiwania
+            var parametryWyszukiwania = new ParametryWyszukiwania
             {
                 Regon = regon
             };
 
-            return await GetLegalEntityAsync(pParametryWyszukiwania);
+            return await GetLegalEntityAsync(parametryWyszukiwania);
         }
 
         /// <inheritdoc />
@@ -98,17 +100,17 @@ namespace SolidCompany.Interop.Gus
         {
             await loginTask;
 
-            var pParametryWyszukiwania = new ParametryWyszukiwania
+            var parametryWyszukiwania = new ParametryWyszukiwania
             {
                 Krs = krs
             };
 
-            return await GetLegalEntityAsync(pParametryWyszukiwania);
+            return await GetLegalEntityAsync(parametryWyszukiwania);
         }
 
-        private async Task<SearchResult> GetLegalEntityAsync(ParametryWyszukiwania pParametryWyszukiwania)
+        private async Task<SearchResult> GetLegalEntityAsync(ParametryWyszukiwania parametryWyszukiwania)
         {
-            var result = await RunWithSessionScopeAsync(client => client.DaneSzukajPodmiotyAsync(pParametryWyszukiwania));
+            var result = await RunWithSessionScopeAsync(client => client.DaneSzukajPodmiotyAsync(parametryWyszukiwania));
 
             var xmlResult = result.DaneSzukajPodmiotyResult;
 
@@ -187,7 +189,7 @@ namespace SolidCompany.Interop.Gus
                 ((IDisposable)webServiceClient)?.Dispose();
             }
         }
-#if NET5_0
+#if NET5_0_OR_GREATER
         /// <inheritdoc cref="IAsyncDisposable" />
         public async ValueTask DisposeAsync()
         {

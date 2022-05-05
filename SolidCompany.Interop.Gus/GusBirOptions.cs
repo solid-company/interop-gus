@@ -1,4 +1,5 @@
-﻿using SolidCompany.Interop.Gus.Connected_Services;
+﻿using System;
+using SolidCompany.Interop.Gus.Connected_Services;
 
 namespace SolidCompany.Interop.Gus
 {
@@ -16,5 +17,16 @@ namespace SolidCompany.Interop.Gus
         /// User key
         /// </summary>
         public string Key { get; set; }
+
+        /// <summary>
+        /// Proxy address
+        /// </summary>
+#if NET5_0_OR_GREATER
+#nullable enable
+        public Uri? ProxyAddress { get; set; }
+#else
+        public Uri ProxyAddress { get; set; }
+#endif
+
     }
 }
